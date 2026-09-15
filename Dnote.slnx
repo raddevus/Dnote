@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Dnote.Tests/Dnote.Tests.csproj" />
+  <Project Path="Dnote/Dnote.csproj" />
+</Solution>
