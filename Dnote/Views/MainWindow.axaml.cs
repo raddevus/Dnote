@@ -17,6 +17,7 @@ public partial class MainWindow : Window
     protected override void OnOpened(EventArgs e){
        base.OnOpened(e);
         CheckThemeVariant();
+        entryDatePicker.SelectedDate = DateTime.Now ;
     }
 
     private void CheckThemeVariant(){

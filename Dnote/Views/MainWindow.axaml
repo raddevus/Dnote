@@ -21,6 +21,16 @@
                 Background="#F5F5F5" 
                 Padding="16">
             <StackPanel Spacing="10">
+                 <CalendarDatePicker Name="entryDatePicker" 
+                    PlaceholderText="EntryDate" />
+<LayoutTransformControl>
+    <LayoutTransformControl.LayoutTransform>
+        <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+    </LayoutTransformControl.LayoutTransform>
+             <!-- The always-visible full calendar -->
+             <Calendar SelectedDate="{Binding MyDate}"
+                  DisplayDate="{Binding MyDate}" />
+                  </LayoutTransformControl>
                 <TextBlock Text="Left Panel" 
                            FontSize="18" 
                            FontWeight="Bold" />
