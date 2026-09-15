@@ -23,18 +23,6 @@ public class Entry{
         Data = data;
     }
 
-    public bool Save(){
-        try{
-            Directory.CreateDirectory(EntryFolder);
-            var targetFile = Path.Combine(EntryFolder,EntryFile);
-            File.Delete(targetFile);
-            File.AppendAllText(targetFile,Data);
-        }
-        catch{
-            return false;
-        }
-        return true;
-    }
 
     public String Read(){
         try{
