@@ -6,15 +6,47 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Dnote.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Dnote">
+        Icon="/Assets/avalonia-logo.ico">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+        <Grid>
+        <!-- Define columns: Left panel, Splitter, Right panel -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" MinWidth="150" MaxWidth="500" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MinWidth="200" />
+        </Grid.ColumnDefinitions>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!-- Left Side Content -->
+        <Border Grid.Column="0" 
+                Background="#F5F5F5" 
+                Padding="16">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Left Panel" 
+                           FontSize="18" 
+                           FontWeight="Bold" />
+                <TextBlock Text="Place navigation, tree view, or sidebar content here." 
+                           TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
 
+        <!-- Vertical GridSplitter -->
+        <GridSplitter Grid.Column="1" 
+                      Width="6" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Stretch" 
+                      Background="#CCCCCC"
+                      ShowsPreview="False" />
+
+        <!-- Right Side Content -->
+        <Border Grid.Column="2" 
+                Background="#FFFFFF" 
+                Padding="16">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Right Panel" 
+                           FontSize="18" 
+                           FontWeight="Bold" />
+                <TextBlock Text="Main content view goes here." />
+            </StackPanel>
+        </Border>
+    </Grid>
 </Window>
