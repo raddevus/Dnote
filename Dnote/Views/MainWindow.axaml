@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Left Side Content -->
-        <Border Grid.Column="0" 
+        <Border Name="LeftBorder" Grid.Column="0" 
                 Background="#F5F5F5" 
                 Padding="16">
             <StackPanel Spacing="10">
@@ -38,7 +38,7 @@
                       ShowsPreview="False" />
 
         <!-- Right Side Content -->
-        <Border Grid.Column="2" 
+        <Border Name="RightBorder" Grid.Column="2" 
                 Background="#FFFFFF" 
                 Padding="16">
             <StackPanel Spacing="10">
