@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 
+namespace Models;
+
 public class Entry{
     public String Data{get;set;}
     public DateTime Created{get;set;}
