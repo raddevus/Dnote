@@ -1,0 +1,13 @@
+using Interfaces;
+
+namespace Repos;
+
+public class EntryFileRepo: IPersistable{
+   public bool Save(){
+      return true;
+   }
+
+   public bool Read(){
+      return true;
+   }
+}
