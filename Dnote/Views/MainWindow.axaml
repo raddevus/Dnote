@@ -28,8 +28,9 @@
         <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
     </LayoutTransformControl.LayoutTransform>
              <!-- The always-visible full calendar -->
-             <Calendar SelectedDate="{Binding MyDate}"
-                  DisplayDate="{Binding MyDate}" />
+             <Calendar SelectedDate="{Binding CurrentDate}"
+                  DisplayDate="{Binding CurrentDate}"
+                  SelectedDatesChanged="Calendar_DisplayDateChanged" />
                   </LayoutTransformControl>
                 <TextBlock Text="Left Panel" 
                            FontSize="18" 

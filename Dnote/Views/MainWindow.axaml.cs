@@ -51,4 +51,9 @@ public partial class MainWindow : Window
              }
          };
    }
+private void Calendar_DisplayDateChanged(object? sender,SelectionChangedEventArgs e)
+    {
+       Console.WriteLine("date changed...");
+       Console.WriteLine($"{e.AddedItems[0]} ");
+    }
 }

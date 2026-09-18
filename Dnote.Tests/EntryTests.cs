@@ -1,10 +1,12 @@
-﻿namespace Dnote.Tests;
+﻿using Models;
 
-public class UnitTest1
+namespace Dnote.Tests;
+
+public class EntryTests 
 {
     [Fact]
     public void Test1()
     {
-
+      Entry e = new(DateTime.Now.ToString(),"test data");
     }
 }
