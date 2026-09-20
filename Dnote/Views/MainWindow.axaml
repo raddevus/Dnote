@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Dnote.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:ae="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Dnote.Views.MainWindow"
@@ -53,6 +54,17 @@
                 Background="#FFFFFF" 
                 Padding="16">
             <StackPanel Spacing="10">
+            <Grid HorizontalAlignment="Stretch">
+        <ae:TextEditor x:Name="Editor"
+                       Background="White"
+                       Foreground="Black"
+                       ShowLineNumbers="True"
+                       FontFamily="Cascadia Code,Consolas,Monospace"
+                       FontSize="14"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Top"
+                       WordWrap="True" />
+    </Grid>
                 <TextBlock Text="Right Panel" 
                            FontSize="18" 
                            FontWeight="Bold" />

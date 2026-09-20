@@ -13,6 +13,8 @@ public partial class MainWindow : Window
         InitializeComponent();
         
         InitThemeChangeHandler();
+        double lineHeight = Editor.TextArea.TextView.DefaultLineHeight;
+        Editor.Height = lineHeight * 20;
     }
     protected override void OnOpened(EventArgs e){
        base.OnOpened(e);
