@@ -57,12 +57,17 @@
                 <!-- Toolbar for adding tabs and actions -->
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
                     <Button Content="+ New Tab" Command="{Binding AddTabCommand}" />
-                </StackPanel>
+<Button x:Name="Save" Click="OnClickSave"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center">
+     Save 
+  </Button>
 <Button x:Name="AddOne" Click="OnClick"
           HorizontalAlignment="Center"
           VerticalAlignment="Center">
     Press Me!
   </Button>
+                </StackPanel>
                 <!-- Dynamic TabControl -->
                 <TabControl x:Name="DocTabControl" Grid.Row="1" 
                             ItemsSource="{Binding Tabs}" 

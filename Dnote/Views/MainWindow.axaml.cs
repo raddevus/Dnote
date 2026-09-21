@@ -15,6 +15,7 @@ namespace Dnote.Views;
 public partial class MainWindow : Window
 {
    private Dnote.ViewModels.DocumentTabViewModel currentSelectedTab;
+   private string currentFileName;
     public MainWindow()
     {
         InitializeComponent();
@@ -45,7 +46,9 @@ public partial class MainWindow : Window
 
     async private Task LoadFile(RichTextEditor r){
        Console.WriteLine("loading file...");
-       await using (var stream = File.OpenRead("output.rtf"))
+       if (!File.Exists(currentFileName)){return;}
+       if (File.ReadAllBytes(currentFileName).Length <= 0){return;}
+       await using (var stream = File.OpenRead(currentFileName))
       {
           await r.LoadAsync(stream, new RtfSerializer());
       }
@@ -54,14 +57,19 @@ public partial class MainWindow : Window
    async private Task SaveFile(){
 
       FileStream fs = null;
-      if (!File.Exists("output.rtf")){
-            fs = File.Create("output.rtf");
+      if (!File.Exists(currentFileName)){
+            fs = File.Create(currentFileName);
       }
       else{
-         fs = File.Open("output.rtf",FileMode.Open);
+         fs = File.Open(currentFileName,FileMode.Open);
        }
 //          await EditorX.SaveAsync(fs, new RtfSerializer());
  } 
+private async void OnClickSave(object? sender, RoutedEventArgs e){
+      RichTextEditor? r = GetActiveRichTextEditor();
+      Console.WriteLine($"{r}");
+      SaveFile();
+}
 private async void OnClick(object? sender, RoutedEventArgs e){
       RichTextEditor? r = GetActiveRichTextEditor();
       Console.WriteLine($"{r}");
@@ -90,7 +98,10 @@ public RichTextEditor? GetActiveRichTextEditor()
     // 2. Search directly within the TabControl's visible visual subtree
     currentSelectedTab = (Dnote.ViewModels.DocumentTabViewModel)DocTabControl.SelectedItem;
     Console.WriteLine($"filename: {currentSelectedTab.FileName}");
-    return DocTabControl.FindDescendantOfType<RichTextEditor>();
+    currentFileName = currentSelectedTab.FileName;
+    var target = DocTabControl.FindDescendantOfType<RichTextEditor>();
+    LoadFile(target);
+    return target;
 }
     // Example usage:
     private void OnSaveButtonClicked()
