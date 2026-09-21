@@ -1,9 +1,12 @@
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
 using Avalonia.Styling;   // For ThemeVariant
 using Avalonia.Media;     // For Brushes
 using Avalonia.Controls.Documents.Serialization.Rtf;
+using Avalonia.VisualTree;
 using System;
+using Avalonia.Threading;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -11,6 +14,7 @@ namespace Dnote.Views;
 
 public partial class MainWindow : Window
 {
+   private Dnote.ViewModels.DocumentTabViewModel currentSelectedTab;
     public MainWindow()
     {
         InitializeComponent();
@@ -24,15 +28,26 @@ public partial class MainWindow : Window
        base.OnOpened(e);
         CheckThemeVariant();
         entryDatePicker.SelectedDate = DateTime.Now ;
-        await LoadFile();
+        RichTextEditor r = GetActiveRichTextEditor();
+        await LoadFile(r);
         // Save RTF, keeping the write off the UI thread
+
+   Dispatcher.UIThread.Post(() =>
+    {
+        RichTextEditor? activeEditor = GetActiveEditor();
+        if (activeEditor != null)
+        {
+            // Successfully retrieved the editor
+            activeEditor.Focus();
+        }
+    }, DispatcherPriority.Loaded);
     }
 
-    async private Task LoadFile(){
+    async private Task LoadFile(RichTextEditor r){
        Console.WriteLine("loading file...");
        await using (var stream = File.OpenRead("output.rtf"))
       {
-          await Editor.LoadAsync(stream, new RtfSerializer());
+          await r.LoadAsync(stream, new RtfSerializer());
       }
     }
 
@@ -45,8 +60,50 @@ public partial class MainWindow : Window
       else{
          fs = File.Open("output.rtf",FileMode.Open);
        }
-          await Editor.SaveAsync(fs, new RtfSerializer());
+//          await EditorX.SaveAsync(fs, new RtfSerializer());
  } 
+private async void OnClick(object? sender, RoutedEventArgs e){
+      RichTextEditor? r = GetActiveRichTextEditor();
+      Console.WriteLine($"{r}");
+      LoadFile(r);
+
+}
+   public RichTextEditor? GetActiveEditor()
+    {
+        // 1. Get the TabControl container for the selected item
+        if (DocTabControl.ContainerFromItem(DocTabControl.SelectedItem) is TabItem selectedTabItem)
+        {
+           Console.WriteLine("Got the item.");
+            // 2. Search the visual tree of the active TabItem for RichTextEditor
+            return selectedTabItem.FindDescendantOfType<RichTextEditor>();
+        }
+
+        return null;
+    }
+
+public RichTextEditor? GetActiveRichTextEditor()
+{
+    // 1. Ensure a tab is selected
+    if (DocTabControl.SelectedItem == null)
+        return null;
+   Console.WriteLine($"{DocTabControl.SelectedItem.GetType()}");
+    // 2. Search directly within the TabControl's visible visual subtree
+    currentSelectedTab = (Dnote.ViewModels.DocumentTabViewModel)DocTabControl.SelectedItem;
+    Console.WriteLine($"filename: {currentSelectedTab.FileName}");
+    return DocTabControl.FindDescendantOfType<RichTextEditor>();
+}
+    // Example usage:
+    private void OnSaveButtonClicked()
+    {
+        RichTextEditor? activeEditor = GetActiveEditor();
+
+        if (activeEditor != null)
+        {
+            // Do something with the active RichTextEditor instance
+            // e.g., activeEditor.Save(...) or access activeEditor.Document
+        }
+    }
+
     private void CheckThemeVariant(){
        Console.WriteLine($"theme: {ActualThemeVariant}"); 
       if (ActualThemeVariant == ThemeVariant.Dark)
