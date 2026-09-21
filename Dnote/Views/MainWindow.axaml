@@ -58,14 +58,14 @@
             
         <RichTextEditor x:Name="Editor">
     <RichTextEditor.Document>
-        <FlowDocument>
-            <Paragraph>
+     <FlowDocument>
+           <Paragraph>
                 <RichRun Text="Welcome to " />
                 <RichBold>
                     <RichRun Text="RichTextEditor" />
                 </RichBold>
                 <RichRun Text="!" />
-            </Paragraph>
+            </Paragraph> 
         </FlowDocument>
     </RichTextEditor.Document>
 </RichTextEditor>

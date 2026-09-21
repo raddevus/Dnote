@@ -2,7 +2,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Styling;   // For ThemeVariant
 using Avalonia.Media;     // For Brushes
+using Avalonia.Controls.Documents.Serialization.Rtf;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Dnote.Views;
 
@@ -11,15 +14,39 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        
+         this.Closing += async (s,e)  =>  { 
+            await SaveFile();
+         }; 
         InitThemeChangeHandler();
+        Console.WriteLine($"{Environment.CurrentDirectory}");
     }
-    protected override void OnOpened(EventArgs e){
+    async protected override void OnOpened(EventArgs e){
        base.OnOpened(e);
         CheckThemeVariant();
         entryDatePicker.SelectedDate = DateTime.Now ;
+        await LoadFile();
+        // Save RTF, keeping the write off the UI thread
     }
 
+    async private Task LoadFile(){
+       Console.WriteLine("loading file...");
+       await using (var stream = File.OpenRead("output.rtf"))
+      {
+          await Editor.LoadAsync(stream, new RtfSerializer());
+      }
+    }
+
+   async private Task SaveFile(){
+
+      FileStream fs = null;
+      if (!File.Exists("output.rtf")){
+            fs = File.Create("output.rtf");
+      }
+      else{
+         fs = File.Open("output.rtf",FileMode.Open);
+       }
+          await Editor.SaveAsync(fs, new RtfSerializer());
+ } 
     private void CheckThemeVariant(){
        Console.WriteLine($"theme: {ActualThemeVariant}"); 
       if (ActualThemeVariant == ThemeVariant.Dark)
@@ -51,6 +78,9 @@ public partial class MainWindow : Window
              }
          };
    }
+
+
+    
 private void Calendar_DisplayDateChanged(object? sender,SelectionChangedEventArgs e)
     {
        Console.WriteLine("date changed...");
