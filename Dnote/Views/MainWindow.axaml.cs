@@ -20,7 +20,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
          this.Closing += async (s,e)  =>  { 
-            await SaveFile();
+            
+            await SaveFile(GetActiveRichTextEditor());
          }; 
         InitThemeChangeHandler();
         Console.WriteLine($"{Environment.CurrentDirectory}");
@@ -54,7 +55,7 @@ public partial class MainWindow : Window
       }
     }
 
-   async private Task SaveFile(){
+   async private Task SaveFile(RichTextEditor r){
 
       FileStream fs = null;
       if (!File.Exists(currentFileName)){
@@ -62,13 +63,14 @@ public partial class MainWindow : Window
       }
       else{
          fs = File.Open(currentFileName,FileMode.Open);
+         r.SaveAsync(fs, new RtfSerializer());
        }
 //          await EditorX.SaveAsync(fs, new RtfSerializer());
  } 
 private async void OnClickSave(object? sender, RoutedEventArgs e){
       RichTextEditor? r = GetActiveRichTextEditor();
       Console.WriteLine($"{r}");
-      SaveFile();
+      SaveFile(r);
 }
 private async void OnClick(object? sender, RoutedEventArgs e){
       RichTextEditor? r = GetActiveRichTextEditor();
