@@ -9,6 +9,7 @@ using System;
 using Avalonia.Threading;
 using System.IO;
 using System.Threading.Tasks;
+using Dnote.ViewModels;
 
 namespace Dnote.Views;
 
@@ -77,6 +78,18 @@ private async void OnClick(object? sender, RoutedEventArgs e){
       Console.WriteLine($"{r}");
       LoadFile(r);
 
+}
+private async void AddTab(object? sender, RoutedEventArgs e){
+      var vm = (MainWindowViewModel)DataContext;
+ 
+      var newTab = new DocumentTabViewModel
+      {
+          FileName = $"Untitled-{vm._newFileCounter++}.rtf"
+      };
+      
+      vm.Tabs.Add(newTab);
+      vm.SelectedTab = newTab;
+      GetActiveRichTextEditor();
 }
    public RichTextEditor? GetActiveEditor()
     {

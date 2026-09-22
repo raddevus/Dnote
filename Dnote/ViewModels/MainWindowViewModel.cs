@@ -15,7 +15,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private DocumentTabViewModel? _selectedTab;
 
-    private int _newFileCounter = 1;
+    public int _newFileCounter = 1;
 
     public MainWindowViewModel()
     {
