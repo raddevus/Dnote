@@ -2,6 +2,8 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
+using System.IO;
 
 namespace Dnote.ViewModels;
 
@@ -26,9 +28,12 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void AddTab()
     {
-        var newTab = new DocumentTabViewModel
-        {
-            FileName = $"Untitled-{_newFileCounter++}.rtf"
+      var EntryFolder = DateTime.Now.ToString("yyyy-MM");
+      Directory.CreateDirectory(EntryFolder);
+      var EntryFile = $"{DateTime.Now.ToString("yyyy-MM-dd")}.txt";
+      var newTab = new DocumentTabViewModel
+      {
+          FileName = $"{Path.Combine(EntryFolder,EntryFile)}-{_newFileCounter++}.rtf"
         };
         
         Tabs.Add(newTab);

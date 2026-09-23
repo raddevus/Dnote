@@ -83,10 +83,13 @@ private async void OnClick(object? sender, RoutedEventArgs e){
 }
 private async void AddTab(object? sender, RoutedEventArgs e){
       var vm = (MainWindowViewModel)DataContext;
- 
+      Console.WriteLine($"selectedDate {entryDatePicker.SelectedDate?.ToString("yyyy-MM")}");
+      var EntryFolder = entryDatePicker.SelectedDate?.ToString("yyyy-MM");
+      Directory.CreateDirectory(EntryFolder);
+      var EntryFile = $"{entryDatePicker.SelectedDate?.ToString("yyyy-MM-dd")}.txt";
       var newTab = new DocumentTabViewModel
       {
-          FileName = $"Untitled-{vm._newFileCounter++}.rtf"
+          FileName = $"{Path.Combine(EntryFolder,EntryFile)}-{vm._newFileCounter++}.rtf"
       };
       
       vm.Tabs.Add(newTab);
@@ -147,5 +150,6 @@ private void Calendar_DisplayDateChanged(object? sender,SelectionChangedEventArg
     {
        Console.WriteLine("date changed...");
        Console.WriteLine($"{e.AddedItems[0]} ");
+       entryDatePicker.SelectedDate = (DateTime?)e.AddedItems[0];
     }
 }
