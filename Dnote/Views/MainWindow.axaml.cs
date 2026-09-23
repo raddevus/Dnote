@@ -50,7 +50,10 @@ public partial class MainWindow : Window
 
     async private Task LoadFile(RichTextEditor r){
        Console.WriteLine("loading file...");
-       if (!File.Exists(currentFileName)){return;}
+       if (!File.Exists(currentFileName)){
+         r.Document.Blocks.Clear();
+         r.Focus();
+         return;}
        if (File.ReadAllBytes(currentFileName).Length <= 0){return;}
        await using (var stream = File.OpenRead(currentFileName))
       {
@@ -81,6 +84,7 @@ private async void OnClick(object? sender, RoutedEventArgs e){
       LoadFile(r);
 
 }
+
 private void AddTab(){
 
       var vm = (MainWindowViewModel)DataContext;
