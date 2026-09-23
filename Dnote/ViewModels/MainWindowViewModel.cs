@@ -22,22 +22,6 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         // Add initial tab
-        AddTab();
-    }
-
-    [RelayCommand]
-    private void AddTab()
-    {
-      var EntryFolder = DateTime.Now.ToString("yyyy-MM");
-      Directory.CreateDirectory(EntryFolder);
-      var EntryFile = $"{DateTime.Now.ToString("yyyy-MM-dd")}.txt";
-      var newTab = new DocumentTabViewModel
-      {
-          FileName = $"{Path.Combine(EntryFolder,EntryFile)}-{_newFileCounter++}.rtf"
-        };
-        
-        Tabs.Add(newTab);
-        SelectedTab = newTab;
     }
 
     [RelayCommand]
