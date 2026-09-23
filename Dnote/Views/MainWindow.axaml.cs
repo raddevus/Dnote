@@ -31,13 +31,15 @@ public partial class MainWindow : Window
        base.OnOpened(e);
         CheckThemeVariant();
         entryDatePicker.SelectedDate = DateTime.Now ;
+
         RichTextEditor r = GetActiveRichTextEditor();
         await LoadFile(r);
         // Save RTF, keeping the write off the UI thread
 
    Dispatcher.UIThread.Post(() =>
     {
-        RichTextEditor? activeEditor = GetActiveEditor();
+      Console.WriteLine("in the post.........");
+        RichTextEditor? activeEditor = GetActiveRichTextEditor();
         if (activeEditor != null)
         {
             // Successfully retrieved the editor
@@ -91,18 +93,6 @@ private async void AddTab(object? sender, RoutedEventArgs e){
       vm.SelectedTab = newTab;
       GetActiveRichTextEditor();
 }
-   public RichTextEditor? GetActiveEditor()
-    {
-        // 1. Get the TabControl container for the selected item
-        if (DocTabControl.ContainerFromItem(DocTabControl.SelectedItem) is TabItem selectedTabItem)
-        {
-           Console.WriteLine("Got the item.");
-            // 2. Search the visual tree of the active TabItem for RichTextEditor
-            return selectedTabItem.FindDescendantOfType<RichTextEditor>();
-        }
-
-        return null;
-    }
 
 public RichTextEditor? GetActiveRichTextEditor()
 {
