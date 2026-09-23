@@ -118,17 +118,6 @@ public RichTextEditor? GetActiveRichTextEditor()
     LoadFile(target);
     return target;
 }
-    // Example usage:
-    private void OnSaveButtonClicked()
-    {
-        RichTextEditor? activeEditor = GetActiveEditor();
-
-        if (activeEditor != null)
-        {
-            // Do something with the active RichTextEditor instance
-            // e.g., activeEditor.Save(...) or access activeEditor.Document
-        }
-    }
 
     private void CheckThemeVariant(){
        Console.WriteLine($"theme: {ActualThemeVariant}"); 
