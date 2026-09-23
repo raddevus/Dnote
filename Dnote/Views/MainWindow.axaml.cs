@@ -36,16 +36,16 @@ public partial class MainWindow : Window
         await LoadFile(r);
         // Save RTF, keeping the write off the UI thread
 
-   Dispatcher.UIThread.Post(() =>
-    {
-      Console.WriteLine("in the post.........");
-        RichTextEditor? activeEditor = GetActiveRichTextEditor();
-        if (activeEditor != null)
+      Dispatcher.UIThread.Post(() =>
         {
-            // Successfully retrieved the editor
-            activeEditor.Focus();
-        }
-    }, DispatcherPriority.Loaded);
+          Console.WriteLine("in the post.........");
+            RichTextEditor? activeEditor = GetActiveRichTextEditor();
+            if (activeEditor != null)
+            {
+                // Successfully retrieved the editor
+                activeEditor.Focus();
+            }
+        }, DispatcherPriority.Loaded);
     }
 
     async private Task LoadFile(RichTextEditor r){
