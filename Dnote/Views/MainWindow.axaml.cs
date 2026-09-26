@@ -32,8 +32,6 @@ public partial class MainWindow : Window
         CheckThemeVariant();
         entryDatePicker.SelectedDate = DateTime.Now ;
         AddTab();
-        RichTextEditor r = GetActiveRichTextEditor();
-        await LoadFile(r);
         // Save RTF, keeping the write off the UI thread
 
       Dispatcher.UIThread.Post(() =>
@@ -87,7 +85,7 @@ private async void OnClickLoadFile(object? sender, RoutedEventArgs e){
       LoadFile(r);
 }
 
-private void AddTab(){
+async private void AddTab(){
 
       var vm = (MainWindowViewModel)DataContext;
       Console.WriteLine($"selectedDate {entryDatePicker.SelectedDate?.ToString("yyyy-MM")}");
@@ -101,7 +99,8 @@ private void AddTab(){
       
       vm.Tabs.Add(newTab);
       vm.SelectedTab = newTab;
-      GetActiveRichTextEditor();
+      RichTextEditor r = GetActiveRichTextEditor();
+      await LoadFile(r);
 }
 
 private async void AddTab(object? sender, RoutedEventArgs e){
