@@ -62,10 +62,10 @@
           VerticalAlignment="Center">
      Save 
   </Button>
-<Button x:Name="AddOne" Click="OnClick"
+<Button x:Name="AddOne" Click="OnClickLoadFile"
           HorizontalAlignment="Center"
           VerticalAlignment="Center">
-    Press Me!
+   Load File 
   </Button>
                 </StackPanel>
                 <!-- Dynamic TabControl -->

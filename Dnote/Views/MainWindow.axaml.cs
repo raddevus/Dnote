@@ -54,7 +54,10 @@ public partial class MainWindow : Window
          r.Document.Blocks.Clear();
          r.Focus();
          return;}
-       if (File.ReadAllBytes(currentFileName).Length <= 0){return;}
+       if (File.ReadAllBytes(currentFileName).Length <= 0){
+         r.Document.Blocks.Clear();
+         r.Focus();
+          return;}
        await using (var stream = File.OpenRead(currentFileName))
       {
           await r.LoadAsync(stream, new RtfSerializer());
@@ -69,7 +72,7 @@ public partial class MainWindow : Window
       }
       else{
          fs = File.Open(currentFileName,FileMode.Open);
-         r.SaveAsync(fs, new RtfSerializer());
+         await r.SaveAsync(fs, new RtfSerializer());
        }
 //          await EditorX.SaveAsync(fs, new RtfSerializer());
  } 
@@ -78,11 +81,10 @@ private async void OnClickSave(object? sender, RoutedEventArgs e){
       Console.WriteLine($"{r}");
       SaveFile(r);
 }
-private async void OnClick(object? sender, RoutedEventArgs e){
+private async void OnClickLoadFile(object? sender, RoutedEventArgs e){
       RichTextEditor? r = GetActiveRichTextEditor();
       Console.WriteLine($"{r}");
       LoadFile(r);
-
 }
 
 private void AddTab(){
@@ -117,7 +119,6 @@ public RichTextEditor? GetActiveRichTextEditor()
     Console.WriteLine($"filename: {currentSelectedTab.FileName}");
     currentFileName = currentSelectedTab.FileName;
     var target = DocTabControl.FindDescendantOfType<RichTextEditor>();
-    LoadFile(target);
     return target;
 }
 
