@@ -93,7 +93,7 @@ private void AddTab(){
       Console.WriteLine($"selectedDate {entryDatePicker.SelectedDate?.ToString("yyyy-MM")}");
       var EntryFolder = entryDatePicker.SelectedDate?.ToString("yyyy-MM");
       Directory.CreateDirectory(EntryFolder);
-      var EntryFile = $"{entryDatePicker.SelectedDate?.ToString("yyyy-MM-dd")}.txt";
+      var EntryFile = $"{entryDatePicker.SelectedDate?.ToString("yyyy-MM-dd")}";
       var newTab = new DocumentTabViewModel
       {
           FileName = $"{Path.Combine(EntryFolder,EntryFile)}-{vm._newFileCounter++}.rtf"
