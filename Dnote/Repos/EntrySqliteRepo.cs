@@ -1,3 +1,6 @@
+using System.Threading;
+using System.Threading.Tasks;
+using System.IO;
 using Interfaces;
 using Models;
 
@@ -11,4 +14,8 @@ public class EntrySqliteRepo: IPersistable{
    public bool Read(){
       return true;
    }
+      public async Task<bool> SaveAsync(string documentKey, Stream contentStream, CancellationToken cancellationToken = default){
+      return true;
+   }
+
 }

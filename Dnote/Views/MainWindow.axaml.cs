@@ -17,6 +17,7 @@ public partial class MainWindow : Window
 {
    private Dnote.ViewModels.DocumentTabViewModel currentSelectedTab;
    private string currentFileName;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -70,7 +71,8 @@ public partial class MainWindow : Window
       }
       else{
          fs = File.Open(currentFileName,FileMode.Open);
-         await r.SaveAsync(fs, new RtfSerializer());
+         var rtfSerializer = new RtfSerializer();
+         await r.SaveAsync(fs, rtfSerializer);
        }
 //          await EditorX.SaveAsync(fs, new RtfSerializer());
  } 
